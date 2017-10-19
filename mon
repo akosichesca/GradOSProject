@@ -1,0 +1,11 @@
+#!/bin/bash
+$*  &
+pid="$!"
+trap ':' INT
+startTime=`date +%s%3N` # Do this before or after forking stuff?
+echo 'TIME CPU  MEM'
+while sleep 0.001; do
+	cpumem=`ps --no-headers -o '%cpu,%mem' -p "$pid"`
+	if [ -z "$cpumem" ]; then break; fi
+	echo "$(expr `date +%s%3N` - $startTime) $cpumem"
+done
