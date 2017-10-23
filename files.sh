@@ -1,6 +1,6 @@
 #!/bin/bash
 declare -a var
-var=( 2 3 4 5 8 10 15 20 30 35 40 50 60 70 80 90 100 ) # Values in M
+var=( 1 2 3 4 5 10 15 20 25 30 35 40 ) # Values in M
 
 size() {
 	mb=$1
