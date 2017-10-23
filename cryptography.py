@@ -81,7 +81,7 @@ def monitor(function, outFile):
 pi = 'pi2'
 OS = 'raspbian'
 schemes = ['AES', 'DES3', 'ARC4']
-files = ['foo', 'bar']
+files = ['2MB', '20MB', '50MB', '80MB']
 outDir = 'results'
 
 # Ensure outDir exists
