@@ -49,6 +49,15 @@ def decryptFunc(scheme):
         decryptor = ARC4.new(key)
     return decryptor.decrypt
 
+import socket
+def sendFunc():
+    global message
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server_address = ('192.168.1.171', 10000)
+    sock.connect(server_address)
+    sock.sendall(message)
+    sock.close
+
 from multiprocessing import Process, Lock, Pipe
 def execFunc(function, message, locklock, lock, conn):
     lock.acquire()
@@ -95,3 +104,5 @@ for scheme in schemes:
         monitor(encryptFunc(scheme), outDir + '/{}-{}-{}-{}-{}.dat'.format(pi, OS, scheme, f, 'encrypt'))
         print('Decrypting {} using {} on a {} running {}'.format(f, scheme, pi, OS))
         monitor(decryptFunc(scheme), outDir + '/{}-{}-{}-{}-{}.dat'.format(pi, OS, scheme, f, 'decrypt'))
+        #print('Sending message')
+        #monitor(sendFunc(), outDir + '/{}-{}-{}-{}.dat'.format(pi, OS, f, 'upload'))
