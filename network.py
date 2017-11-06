@@ -90,7 +90,7 @@ def sendfile(message):
         sock.close()
     return message
     
-pi = 'pi2'
+pi = 'pi1'
 OS = 'raspbian'
 schemes = ['AES', 'DES3', 'ARC4']
 files = ['1MB', '2MB', '3MB', '4MB', '5MB', '10MB', '15MB', '20MB', '25MB', '30MB', '35MB', '40MB']
