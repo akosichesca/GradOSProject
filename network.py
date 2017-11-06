@@ -2,6 +2,7 @@
 import time
 import sys
 import os
+import socket
 import subprocess
 from Crypto.Cipher import AES, DES3, ARC4
 from Crypto.PublicKey import RSA
@@ -70,24 +71,24 @@ def monitor(function, outFile):
     locklock.acquire()
     with open(outFile, 'w') as f:
         while not lock.acquire(block=False):
-            output = '{} {}'.format(int(time.time() * 1000) - startTime, subprocess.check_output("ps --no-headers -o '%cpu,%mem' -p {}".format(p.pid), shell=True).strip())
+            output = '{} {}'.format(int(time.time() * 1000), subprocess.check_output("ps --no-headers -o '%cpu,%mem' -p {}".format(p.pid), shell=True).strip())
             print(output)
             f.write(output + '\n')
             time.sleep(.01)
     message = parent_conn.recv()
     p.join()
 
-def sendfile():
-    global message
+def sendfile(message):
+    #global message
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server_address = ('192.168.1.171', 10000)
+    server_address = ('192.168.1.220', 50000)
     sock.connect(server_address)
     try:
         sock.sendall(message)
     finally:
         print >>sys.stderr, 'closing socket'
         sock.close()
-    
+    return message
     
 pi = 'pi2'
 OS = 'raspbian'
@@ -102,5 +103,5 @@ for f in files:
     print('Reading {}'.format(f))
     read(f)
     print('Sending File {} on a {} running {}'.format(f, pi, OS))
-    monitor(sendfile(), outDir + '/{}-{}-{}-{}.dat'.format(pi, OS, f, 'network'))
+    monitor(sendfile, outDir + '/{}-{}-{}-{}.dat'.format(pi, OS, f, 'network'))
        
