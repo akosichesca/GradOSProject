@@ -79,7 +79,7 @@ def monitor(function, outFile):
     locklock.acquire()
     with open(outFile, 'w') as f:
         while not lock.acquire(block=False):
-            output = '{} {}'.format(int(time.time() * 1000) - startTime, subprocess.check_output("ps --no-headers -o '%cpu,%mem' -p {}".format(p.pid), shell=True).strip())
+            output = '{} {}'.format(int(time.time() * 1000), subprocess.check_output("ps --no-headers -o '%cpu,%mem' -p {}".format(p.pid), shell=True).strip())
             print(output)
             f.write(output + '\n')
             time.sleep(.01)
@@ -87,10 +87,10 @@ def monitor(function, outFile):
     p.join()
 
 
-pi = 'pi2'
-OS = 'raspbian'
+pi = 'pi1'
+OS = 'arch'
 schemes = ['AES', 'DES3', 'ARC4']
-files = ['1MB', '2MB', '3MB', '4MB', '5MB', '10MB', '15MB', '20MB', '25MB', '30MB', '35MB', '40MB']
+files = ['1MB', '2MB', '3MB', '4MB', '5MB', '10MB', '15MB', '20MB', '25MB']
 outDir = 'results'
 
 # Ensure outDir exists
